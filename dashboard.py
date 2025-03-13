@@ -16,18 +16,19 @@ dark_mode = st.sidebar.toggle("🌙 Dark Mode", value=False)
 # Define Theme Colors
 if dark_mode:
     theme = {
-        "bg_color": "#1E1E1E",
-        "text_color": "#EAEAEA",
-        "table_bg": "#2D2D2D",
-        "highlight": "#FF4B4B",
+        "bg_color": "#121212",    # True Dark Mode
+        "text_color": "#FFFFFF",   # White Text for Contrast
+        "table_bg": "#1E1E1E",     # Dark Gray Table
+        "highlight": "#FF5733",    # Orange Highlight for Visibility
     }
 else:
     theme = {
-        "bg_color": "#FFFFFF",
-        "text_color": "#333333",
-        "table_bg": "#F7F7F7",
-        "highlight": "#007BFF",
+        "bg_color": "#F9F9F9",     # Lighter Background
+        "text_color": "#222222",   # Dark Gray Text for Readability
+        "table_bg": "#FFFFFF",     # White Table Background
+        "highlight": "#007BFF",    # Blue Highlight
     }
+
 
 # Apply Streamlit's Native Theme Styling
 st.markdown(
@@ -169,3 +170,20 @@ if projects:
 else:
     print("❌ Failed to fetch projects after retries!")
 
+import threading
+import requests
+import time
+
+FASTAPI_URL = "https://project-memory-dashboard.onrender.com"
+
+# Function to keep API alive
+def keep_api_awake():
+    while True:
+        try:
+            requests.get(f"{FASTAPI_URL}/health", timeout=5)  # Send a request to keep API awake
+        except requests.exceptions.RequestException:
+            pass  # Ignore failures
+        time.sleep(300)  # Run every 5 minutes
+
+# Start background thread
+threading.Thread(target=keep_api_awake, daemon=True).start()
