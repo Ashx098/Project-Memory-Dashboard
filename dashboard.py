@@ -145,3 +145,27 @@ if run_command and command_input.strip():
 if st.session_state.refresh:
     st.session_state.refresh = False
     st.rerun()
+
+
+FASTAPI_URL = "https://project-memory-dashboard.onrender.com"
+
+# Retry mechanism for waking up FastAPI
+def fetch_with_retry(url, retries=5, delay=5):
+    for i in range(retries):
+        try:
+            response = requests.get(url, timeout=10)
+            if response.status_code == 200:
+                return response.json()
+        except requests.exceptions.RequestException as e:
+            print(f"Retry {i+1}/{retries} failed: {e}")
+        time.sleep(delay)
+    return None  # Return None if all retries fail
+
+# Fetch projects with retry
+projects = fetch_with_retry(f"{FASTAPI_URL}/projects")
+
+if projects:
+    print("✅ Successfully fetched projects:", projects)
+else:
+    print("❌ Failed to fetch projects after retries!")
+
