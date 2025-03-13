@@ -21,6 +21,10 @@ def get_latest_commit():
 def read_root():
     return {"message": "Project Memory API is running!"}
 
+@app.get("/health")
+def health_check():
+    return {"status": "ok"}
+
 @app.get("/projects")
 def get_projects():
     """Fetches all projects from the database."""
