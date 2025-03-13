@@ -4,7 +4,8 @@ import pandas as pd
 import time
 
 # Set FastAPI URL
-FASTAPI_URL = "http://127.0.0.1:8000"
+FASTAPI_URL = "https://project-memory-dashboard.onrender.com:10000"
+
 
 # Page Configuration
 st.set_page_config(page_title="Project Memory Dashboard", layout="wide")
