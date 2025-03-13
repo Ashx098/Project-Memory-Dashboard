@@ -4,7 +4,7 @@ import pandas as pd
 import time
 
 # Set FastAPI URL
-FASTAPI_URL = "https://project-memory-dashboard.onrender.com:10000"
+FASTAPI_URL = "https://project-memory-dashboard.onrender.com"  # REMOVE PORT 10000
 
 
 # Page Configuration
