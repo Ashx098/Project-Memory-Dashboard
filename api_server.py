@@ -1,13 +1,18 @@
 import subprocess
 import sqlite3
+import os
 from fastapi import FastAPI
 
 app = FastAPI()
-DB_NAME = "D:/AI_Local_Memory/project_memory.db"
+
+# Dynamically determine the database path
+DB_NAME = "project_memory.db"
+DB_PATH = os.path.join(os.getcwd(), DB_NAME)
 
 def connect_db():
     """Connects to SQLite and returns a connection."""
-    return sqlite3.connect(DB_NAME)
+    print(f"DEBUG: Connecting to SQLite at {DB_PATH}")  # Debugging Log
+    return sqlite3.connect(DB_PATH)
 
 def get_latest_commit():
     """Gets the latest Git commit hash."""
